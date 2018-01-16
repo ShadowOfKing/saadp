@@ -36,12 +36,16 @@ namespace Lab1
         static void Main(string[] args)
         {
             var str = System.IO.File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "input.json"));
-            //var array = JsonConvert.DeserializeObject<int[]>(str);
-            var array = new int[] { 1, 3, 9, 2, 7, 4, 5, 1, 0 };
+            var array = JsonConvert.DeserializeObject<int[]>(str);
             int[] resArray = new int[array.Length];
             Array.Copy(array, resArray, array.Length);
+            System.Diagnostics.Stopwatch swatch = new System.Diagnostics.Stopwatch();
+            swatch.Start();
             Sort.Selection(ref resArray);
+            swatch.Stop();
+            var selectTime = swatch.ElapsedMilliseconds.ToString() + "ms";
             Console.WriteLine(String.Format("Selection: {0}", String.Join(",", resArray)));
+            Console.WriteLine(String.Format("Selection time: {0}", selectTime));
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
