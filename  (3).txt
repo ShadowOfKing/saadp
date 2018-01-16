@@ -1,0 +1,20 @@
+void selection(int *ar, int size)
+ {
+     int i, j, mx, nmx;
+
+     for(i = 0; i < size-1; i++)
+       {
+         mx=ar[i];
+         nmx=i;
+         for(j = i+1; j < size; j++)
+           {
+             if (ar[j]<mx)
+                {
+                 mx=ar[j];
+                 nmx=j;
+                 }
+           }
+          ar[nmx]=ar[i];
+          ar[i]=mx;
+           }
+     }
