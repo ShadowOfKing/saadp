@@ -31,7 +31,7 @@ namespace Lab1
             }
         }
 
-        private static void RadixSort(ref int[] ar, int min, int max)
+        private static void CountingSort(ref int[] ar, int min, int max)
         {
             int[] br = new int[ar.Length];
             Array.Copy(ar, br, ar.Length);
@@ -49,7 +49,7 @@ namespace Lab1
             }
             ar = br;
         }
-        public static void Radix(ref int[] ar)
+        public static void Counting(ref int[] ar)
         {
             var min = int.MaxValue;
             var max = int.MinValue;
@@ -64,7 +64,7 @@ namespace Lab1
                     min = ar[i];
                 }
             }
-            RadixSort(ref ar, min, max);
+            CountingSort(ref ar, min, max);
         }
     }
     class Program
@@ -104,7 +104,7 @@ namespace Lab1
             File.Create(outFilePath).Close();
             AddToFile("{");
             ApplySort(array, Sort.Selection, "Selection");
-            ApplySort(array, Sort.Radix, "Radix");
+            ApplySort(array, Sort.Counting, "Counting");
             AddToFile("}");
         }
     }
