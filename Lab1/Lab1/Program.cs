@@ -30,7 +30,8 @@ namespace Lab1
                 ar[i] = mx;
             }
         }
-        public static void Radix(ref int[] ar, int min, int max)
+
+        private static void RadixSort(ref int[] ar, int min, int max)
         {
             int[] br = new int[ar.Length];
             Array.Copy(ar, br, ar.Length);
@@ -48,45 +49,63 @@ namespace Lab1
             }
             ar = br;
         }
+        public static void Radix(ref int[] ar)
+        {
+            var min = int.MaxValue;
+            var max = int.MinValue;
+            for (int i = 0; i < ar.Length; i++)
+            {
+                if (ar[i] > max)
+                {
+                    max = ar[i];
+                }
+                if (ar[i] < min)
+                {
+                    min = ar[i];
+                }
+            }
+            RadixSort(ref ar, min, max);
+        }
     }
     class Program
     {
+        private delegate void SortF(ref int[] ar);
+        private static string outFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");
+        private static void AddToFile(string s)
+        {
+            StreamWriter writer = new StreamWriter(outFilePath, true);
+            writer.WriteLine(s);
+            writer.Close();
+        }
+        private static void ApplySort(int[] array, SortF sort, string name)
+        {
+            var ar = new int[array.Length];
+            Array.Copy(array, ar, array.Length);
+            System.Diagnostics.Stopwatch swatch = new System.Diagnostics.Stopwatch();
+            swatch.Start();
+            sort(ref ar);
+            swatch.Stop();
+            AddToFile(String.Format("\t\"{0}\":", name));
+            AddToFile("\t{");
+            AddToFile(String.Format("\t\t\"Time\": {0},", swatch.ElapsedMilliseconds));
+            AddToFile(String.Format("\t\t\"Result\": [{0}]", String.Join(",", ar)));
+            AddToFile("\t},");
+            Console.WriteLine("{0} OK!", name);
+        }
+
         static void Main(string[] args)
         {
             var str = System.IO.File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "input.json"));
             var array = JsonConvert.DeserializeObject<int[]>(str);
-            int[] resArray = new int[array.Length];
-            Array.Copy(array, resArray, array.Length);
-            System.Diagnostics.Stopwatch swatch = new System.Diagnostics.Stopwatch();
-            swatch.Start();
-            Sort.Selection(ref resArray);
-            swatch.Stop();
-            var selectTime = swatch.ElapsedMilliseconds.ToString() + "ms";
-            Console.WriteLine(String.Format("Selection: {0}", String.Join(",", resArray)));
-            Array.Copy(array, resArray, array.Length);
-            var min = int.MaxValue;
-            var max = int.MinValue;
-            for (int i = 0; i < resArray.Length; i++)
+            if (File.Exists(outFilePath))
             {
-                if (resArray[i] > max)
-                {
-                    max = resArray[i];
-                }
-                if (resArray[i] < min)
-                {
-                    min = resArray[i];
-                }
+                File.Delete(outFilePath);
             }
-            swatch = new System.Diagnostics.Stopwatch();
-            Console.ReadKey();
-            Sort.Radix(ref resArray, min, max);
-            swatch.Stop();
-            var radixTime = swatch.ElapsedMilliseconds.ToString() + "ms";
-            Console.WriteLine(String.Format("Radix: {0}", String.Join(",", resArray)));
-            Console.WriteLine(String.Format("Selection time: {0}", selectTime));
-            Console.WriteLine(String.Format("Radix time: {0}", radixTime));
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
+            File.Create(outFilePath).Close();
+            AddToFile("{");
+            ApplySort(array, Sort.Selection, "Selection");
+            ApplySort(array, Sort.Radix, "Radix");
+            AddToFile("}");
         }
     }
 }
