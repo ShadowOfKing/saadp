@@ -1,0 +1,46 @@
+{
+	"Bubble":
+	{
+		"Time": 9531383,
+	},
+	"Shaker":
+	{
+		"Time": 6629989,
+	},
+	"Comb":
+	{
+		"Time": 455,
+	},
+	"Selection":
+	{
+		"Time": 1402902,
+	},
+	"Insertion":
+	{
+		"Time": 4339391,
+	},
+	"Gnome":
+	{
+		"Time": 4919515,
+	},
+	"Shells":
+	{
+		"Time": 529,
+	},
+	"Counting":
+	{
+		"Time": 19,
+	},
+	"Quick":
+	{
+		"Time": 291,
+	},
+	"Merge":
+	{
+		"Time": 386,
+	},
+	"Tree":
+	{
+		"Time": 2726,
+	},
+}
