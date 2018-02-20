@@ -1,0 +1,10 @@
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\bin\Debug\Lab1_WForms.exe.config
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\bin\Debug\Lab1_WForms.exe
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\bin\Debug\Lab1_WForms.pdb
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.csprojResolveAssemblyReference.cache
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.Form1.resources
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.Properties.Resources.resources
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.csproj.GenerateResource.Cache
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.csproj.CoreCompileInputs.cache
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.exe
+D:\Work\University\САОД_БПО-15_2018\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.pdb
