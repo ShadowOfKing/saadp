@@ -44,13 +44,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.input__count = new System.Windows.Forms.TextBox();
-            this.input__count_to = new System.Windows.Forms.TextBox();
             this.label__count = new System.Windows.Forms.Label();
             this.label__count_to = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.input__count = new System.Windows.Forms.NumericUpDown();
+            this.input__count_to = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.input__count)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.input__count_to)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -70,13 +72,14 @@
             this.input__mode_multy.Name = "input__mode_multy";
             this.input__mode_multy.Size = new System.Drawing.Size(133, 17);
             this.input__mode_multy.TabIndex = 1;
-            this.input__mode_multy.TabStop = true;
             this.input__mode_multy.Text = "Проход по диапазону";
             this.input__mode_multy.UseVisualStyleBackColor = true;
+            this.input__mode_multy.CheckedChanged += new System.EventHandler(this.ChangeMode);
             // 
             // input__mode_single
             // 
             this.input__mode_single.AutoSize = true;
+            this.input__mode_single.Checked = true;
             this.input__mode_single.Location = new System.Drawing.Point(7, 20);
             this.input__mode_single.Name = "input__mode_single";
             this.input__mode_single.Size = new System.Drawing.Size(89, 17);
@@ -84,6 +87,7 @@
             this.input__mode_single.TabStop = true;
             this.input__mode_single.Text = "Один проход";
             this.input__mode_single.UseVisualStyleBackColor = true;
+            this.input__mode_single.CheckedChanged += new System.EventHandler(this.ChangeMode);
             // 
             // input__sortes
             // 
@@ -211,20 +215,6 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Количество элементов";
             // 
-            // input__count
-            // 
-            this.input__count.Location = new System.Drawing.Point(387, 204);
-            this.input__count.Name = "input__count";
-            this.input__count.Size = new System.Drawing.Size(127, 20);
-            this.input__count.TabIndex = 12;
-            // 
-            // input__count_to
-            // 
-            this.input__count_to.Location = new System.Drawing.Point(387, 238);
-            this.input__count_to.Name = "input__count_to";
-            this.input__count_to.Size = new System.Drawing.Size(127, 20);
-            this.input__count_to.TabIndex = 13;
-            // 
             // label__count
             // 
             this.label__count.AutoSize = true;
@@ -261,17 +251,32 @@
             this.button6.TabIndex = 17;
             this.button6.Text = "Отсортировать";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.SortData);
+            // 
+            // input__count
+            // 
+            this.input__count.Location = new System.Drawing.Point(394, 205);
+            this.input__count.Name = "input__count";
+            this.input__count.Size = new System.Drawing.Size(120, 20);
+            this.input__count.TabIndex = 18;
+            // 
+            // input__count_to
+            // 
+            this.input__count_to.Location = new System.Drawing.Point(394, 241);
+            this.input__count_to.Name = "input__count_to";
+            this.input__count_to.Size = new System.Drawing.Size(120, 20);
+            this.input__count_to.TabIndex = 19;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(819, 386);
+            this.Controls.Add(this.input__count_to);
+            this.Controls.Add(this.input__count);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.label__count);
-            this.Controls.Add(this.input__count_to);
-            this.Controls.Add(this.input__count);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -291,6 +296,8 @@
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.input__count)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.input__count_to)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,12 +321,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox input__count;
-        private System.Windows.Forms.TextBox input__count_to;
         private System.Windows.Forms.Label label__count;
         private System.Windows.Forms.Label label__count_to;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.NumericUpDown input__count;
+        private System.Windows.Forms.NumericUpDown input__count_to;
     }
 }
 

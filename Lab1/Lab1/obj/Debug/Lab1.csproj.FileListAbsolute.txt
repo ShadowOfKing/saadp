@@ -7,3 +7,12 @@ D:\Work\University\САОД_БПО-15_2018\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreC
 D:\Work\University\САОД_БПО-15_2018\Lab1\Lab1\obj\Debug\Lab1.exe
 D:\Work\University\САОД_БПО-15_2018\Lab1\Lab1\obj\Debug\Lab1.pdb
 D:\Work\University\САОД_БПО-15_2018\Lab1\Lab1\obj\Debug\Lab1.csprojResolveAssemblyReference.cache
+D:\Work\Univ\saadp\Lab1\Lab1\bin\Debug\Lab1.exe.config
+D:\Work\Univ\saadp\Lab1\Lab1\bin\Debug\Lab1.exe
+D:\Work\Univ\saadp\Lab1\Lab1\bin\Debug\Lab1.pdb
+D:\Work\Univ\saadp\Lab1\Lab1\bin\Debug\Newtonsoft.Json.dll
+D:\Work\Univ\saadp\Lab1\Lab1\bin\Debug\Newtonsoft.Json.xml
+D:\Work\Univ\saadp\Lab1\Lab1\obj\Debug\Lab1.csprojResolveAssemblyReference.cache
+D:\Work\Univ\saadp\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+D:\Work\Univ\saadp\Lab1\Lab1\obj\Debug\Lab1.exe
+D:\Work\Univ\saadp\Lab1\Lab1\obj\Debug\Lab1.pdb
