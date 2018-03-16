@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
             this.output__table = new System.Windows.Forms.DataGridView();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.T = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,21 +52,15 @@
             this.Td = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RRR = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.output__table)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 420);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(989, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Закрыть";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.CloseInputForm);
-            // 
             // output__table
             // 
+            this.output__table.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.output__table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.output__table.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Time,
@@ -95,7 +88,7 @@
             this.tR});
             this.output__table.Location = new System.Drawing.Point(2, 1);
             this.output__table.Name = "output__table";
-            this.output__table.Size = new System.Drawing.Size(1013, 404);
+            this.output__table.Size = new System.Drawing.Size(1013, 388);
             this.output__table.TabIndex = 1;
             // 
             // Time
@@ -236,13 +229,26 @@
             this.tR.Name = "tR";
             this.tR.ReadOnly = true;
             // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(12, 406);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 3, 3, 100);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(989, 33);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Закрыть";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.CloseInputForm);
+            // 
             // FormInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1013, 455);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.output__table);
-            this.Controls.Add(this.button1);
             this.Name = "FormInput";
             this.Text = "FormInput";
             ((System.ComponentModel.ISupportInitialize)(this.output__table)).EndInit();
@@ -251,8 +257,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView output__table;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn T;
@@ -277,5 +281,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Td;
         private System.Windows.Forms.DataGridViewTextBoxColumn RRR;
         private System.Windows.Forms.DataGridViewTextBoxColumn tR;
+        private System.Windows.Forms.Button button2;
     }
 }

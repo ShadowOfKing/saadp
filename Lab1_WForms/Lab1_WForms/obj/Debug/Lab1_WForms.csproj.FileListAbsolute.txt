@@ -25,3 +25,4 @@ D:\Work\Univ\saadp\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.csproj.CoreComp
 D:\Work\Univ\saadp\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.exe
 D:\Work\Univ\saadp\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.pdb
 D:\Work\Univ\saadp\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.FormOutput.resources
+D:\Work\Univ\saadp\Lab1_WForms\Lab1_WForms\obj\Debug\Lab1_WForms.csproj.Lab1_WForms.exe.config

@@ -13,18 +13,35 @@ namespace Lab1_WForms
 {
     public partial class FormInput : Form
     {
+        private const int CP_NOCLOSE_BUTTON = 0x200;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams myCp = base.CreateParams;
+                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
+                return myCp;
+            }
+        }
+
+        public bool Empty;
+
         public FormInput()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
+            Empty = true;
+
         }
 
         private void CloseInputForm(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         public void SetTable(List<WeatherData> data)
         {
+            Empty = false;
             this.output__table.Rows.Clear();
             for (var i = 0; i < data.Count; i++)
             {

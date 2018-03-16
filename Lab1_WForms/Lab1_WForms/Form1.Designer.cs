@@ -50,9 +50,12 @@
             this.button6 = new System.Windows.Forms.Button();
             this.input__count = new System.Windows.Forms.NumericUpDown();
             this.input__count_to = new System.Windows.Forms.NumericUpDown();
+            this.input__step = new System.Windows.Forms.NumericUpDown();
+            this.label_step = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.input__count)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.input__count_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.input__step)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -256,6 +259,11 @@
             // input__count
             // 
             this.input__count.Location = new System.Drawing.Point(394, 205);
+            this.input__count.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.input__count.Name = "input__count";
             this.input__count.Size = new System.Drawing.Size(120, 20);
             this.input__count.TabIndex = 18;
@@ -263,15 +271,63 @@
             // input__count_to
             // 
             this.input__count_to.Location = new System.Drawing.Point(394, 241);
+            this.input__count_to.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.input__count_to.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.input__count_to.Name = "input__count_to";
             this.input__count_to.Size = new System.Drawing.Size(120, 20);
             this.input__count_to.TabIndex = 19;
+            this.input__count_to.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // input__step
+            // 
+            this.input__step.Location = new System.Drawing.Point(394, 267);
+            this.input__step.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.input__step.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.input__step.Name = "input__step";
+            this.input__step.Size = new System.Drawing.Size(120, 20);
+            this.input__step.TabIndex = 21;
+            this.input__step.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label_step
+            // 
+            this.label_step.AutoSize = true;
+            this.label_step.Location = new System.Drawing.Point(367, 269);
+            this.label_step.Name = "label_step";
+            this.label_step.Size = new System.Drawing.Size(27, 13);
+            this.label_step.TabIndex = 20;
+            this.label_step.Text = "Шаг";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(819, 386);
+            this.Controls.Add(this.input__step);
+            this.Controls.Add(this.label_step);
             this.Controls.Add(this.input__count_to);
             this.Controls.Add(this.input__count);
             this.Controls.Add(this.button6);
@@ -298,6 +354,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.input__count)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.input__count_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.input__step)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,6 +384,8 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.NumericUpDown input__count;
         private System.Windows.Forms.NumericUpDown input__count_to;
+        private System.Windows.Forms.NumericUpDown input__step;
+        private System.Windows.Forms.Label label_step;
     }
 }
 

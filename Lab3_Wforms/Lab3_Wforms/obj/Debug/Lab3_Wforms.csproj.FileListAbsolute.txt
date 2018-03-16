@@ -1,0 +1,10 @@
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\bin\Debug\Lab3_Wforms.exe.config
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\bin\Debug\Lab3_Wforms.exe
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\bin\Debug\Lab3_Wforms.pdb
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.csprojResolveAssemblyReference.cache
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.Train.resources
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.Properties.Resources.resources
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.csproj.GenerateResource.Cache
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.csproj.CoreCompileInputs.cache
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.exe
+D:\Work\Univ\saadp\Lab3_Wforms\Lab3_Wforms\obj\Debug\Lab3_Wforms.pdb

@@ -30,37 +30,31 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.output__table = new System.Windows.Forms.DataGridView();
+            this.Sort = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.T = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Po = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.P = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.U = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ff = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.W1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.W2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Tx = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.H = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Td = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RRR = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Iterations = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Swaps = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Assigments = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.output_tabs = new System.Windows.Forms.TabControl();
+            this.output__tab_table = new System.Windows.Forms.TabPage();
+            this.output__tab_time = new System.Windows.Forms.TabPage();
+            this.output__tab_iterations = new System.Windows.Forms.TabPage();
+            this.output__tab_swaps = new System.Windows.Forms.TabPage();
+            this.output__tab_assigments = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.output__table)).BeginInit();
+            this.output_tabs.SuspendLayout();
+            this.output__tab_table.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 420);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(28, 387);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(989, 23);
+            this.button1.Size = new System.Drawing.Size(964, 36);
             this.button1.TabIndex = 0;
             this.button1.Text = "Закрыть";
             this.button1.UseVisualStyleBackColor = true;
@@ -68,184 +62,147 @@
             // 
             // output__table
             // 
+            this.output__table.AllowUserToAddRows = false;
+            this.output__table.AllowUserToDeleteRows = false;
+            this.output__table.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.output__table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.output__table.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Sort,
+            this.Count,
+            this.Type,
             this.Time,
-            this.T,
-            this.Po,
-            this.P,
-            this.Pa,
-            this.U,
-            this.DD,
-            this.Ff,
-            this.N,
-            this.WW,
-            this.W1,
-            this.W2,
-            this.Tn,
-            this.Tx,
-            this.Cl,
-            this.Nh,
-            this.H,
-            this.Cm,
-            this.Ch,
-            this.VV,
-            this.Td,
-            this.RRR,
-            this.tR});
-            this.output__table.Location = new System.Drawing.Point(2, 1);
+            this.Iterations,
+            this.Swaps,
+            this.Assigments});
+            this.output__table.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.output__table.Location = new System.Drawing.Point(3, 3);
             this.output__table.Name = "output__table";
-            this.output__table.Size = new System.Drawing.Size(1013, 404);
+            this.output__table.ReadOnly = true;
+            this.output__table.RowHeadersWidth = 50;
+            this.output__table.Size = new System.Drawing.Size(1000, 349);
             this.output__table.TabIndex = 1;
+            // 
+            // Sort
+            // 
+            this.Sort.HeaderText = "Сортировка";
+            this.Sort.Name = "Sort";
+            this.Sort.ReadOnly = true;
+            // 
+            // Count
+            // 
+            this.Count.HeaderText = "Количество элементов";
+            this.Count.Name = "Count";
+            this.Count.ReadOnly = true;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Тип данных";
+            this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
             // 
             // Time
             // 
-            this.Time.HeaderText = "Time";
+            this.Time.HeaderText = "Время";
             this.Time.Name = "Time";
             this.Time.ReadOnly = true;
             // 
-            // T
+            // Iterations
             // 
-            this.T.HeaderText = "T";
-            this.T.Name = "T";
-            this.T.ReadOnly = true;
+            this.Iterations.HeaderText = "Итерации";
+            this.Iterations.Name = "Iterations";
+            this.Iterations.ReadOnly = true;
             // 
-            // Po
+            // Swaps
             // 
-            this.Po.HeaderText = "Po";
-            this.Po.Name = "Po";
-            this.Po.ReadOnly = true;
+            this.Swaps.HeaderText = "Обмены";
+            this.Swaps.Name = "Swaps";
+            this.Swaps.ReadOnly = true;
             // 
-            // P
+            // Assigments
             // 
-            this.P.HeaderText = "P";
-            this.P.Name = "P";
-            this.P.ReadOnly = true;
+            this.Assigments.HeaderText = "Присваивания";
+            this.Assigments.Name = "Assigments";
+            this.Assigments.ReadOnly = true;
             // 
-            // Pa
+            // output_tabs
             // 
-            this.Pa.HeaderText = "Pa";
-            this.Pa.Name = "Pa";
-            this.Pa.ReadOnly = true;
+            this.output_tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.output_tabs.Controls.Add(this.output__tab_table);
+            this.output_tabs.Controls.Add(this.output__tab_time);
+            this.output_tabs.Controls.Add(this.output__tab_iterations);
+            this.output_tabs.Controls.Add(this.output__tab_swaps);
+            this.output_tabs.Controls.Add(this.output__tab_assigments);
+            this.output_tabs.Location = new System.Drawing.Point(0, 0);
+            this.output_tabs.Name = "output_tabs";
+            this.output_tabs.SelectedIndex = 0;
+            this.output_tabs.Size = new System.Drawing.Size(1014, 381);
+            this.output_tabs.TabIndex = 2;
             // 
-            // U
+            // output__tab_table
             // 
-            this.U.HeaderText = "U";
-            this.U.Name = "U";
-            this.U.ReadOnly = true;
+            this.output__tab_table.Controls.Add(this.output__table);
+            this.output__tab_table.Location = new System.Drawing.Point(4, 22);
+            this.output__tab_table.Name = "output__tab_table";
+            this.output__tab_table.Padding = new System.Windows.Forms.Padding(3);
+            this.output__tab_table.Size = new System.Drawing.Size(1006, 355);
+            this.output__tab_table.TabIndex = 0;
+            this.output__tab_table.Text = "Общая таблица";
+            this.output__tab_table.UseVisualStyleBackColor = true;
             // 
-            // DD
+            // output__tab_time
             // 
-            this.DD.HeaderText = "DD";
-            this.DD.Name = "DD";
-            this.DD.ReadOnly = true;
+            this.output__tab_time.Location = new System.Drawing.Point(4, 22);
+            this.output__tab_time.Name = "output__tab_time";
+            this.output__tab_time.Padding = new System.Windows.Forms.Padding(3);
+            this.output__tab_time.Size = new System.Drawing.Size(1006, 355);
+            this.output__tab_time.TabIndex = 0;
+            this.output__tab_time.Text = "Время";
+            this.output__tab_time.UseVisualStyleBackColor = true;
             // 
-            // Ff
+            // output__tab_iterations
             // 
-            this.Ff.HeaderText = "Ff";
-            this.Ff.Name = "Ff";
-            this.Ff.ReadOnly = true;
+            this.output__tab_iterations.Location = new System.Drawing.Point(4, 22);
+            this.output__tab_iterations.Name = "output__tab_iterations";
+            this.output__tab_iterations.Padding = new System.Windows.Forms.Padding(3);
+            this.output__tab_iterations.Size = new System.Drawing.Size(1006, 355);
+            this.output__tab_iterations.TabIndex = 1;
+            this.output__tab_iterations.Text = "Итерации";
+            this.output__tab_iterations.UseVisualStyleBackColor = true;
             // 
-            // N
+            // output__tab_swaps
             // 
-            this.N.HeaderText = "N";
-            this.N.Name = "N";
-            this.N.ReadOnly = true;
+            this.output__tab_swaps.Location = new System.Drawing.Point(4, 22);
+            this.output__tab_swaps.Name = "output__tab_swaps";
+            this.output__tab_swaps.Padding = new System.Windows.Forms.Padding(3);
+            this.output__tab_swaps.Size = new System.Drawing.Size(1006, 355);
+            this.output__tab_swaps.TabIndex = 2;
+            this.output__tab_swaps.Text = "Обмены";
+            this.output__tab_swaps.UseVisualStyleBackColor = true;
             // 
-            // WW
+            // output__tab_assigments
             // 
-            this.WW.HeaderText = "WW";
-            this.WW.Name = "WW";
-            this.WW.ReadOnly = true;
-            // 
-            // W1
-            // 
-            this.W1.HeaderText = "W1";
-            this.W1.Name = "W1";
-            this.W1.ReadOnly = true;
-            // 
-            // W2
-            // 
-            this.W2.HeaderText = "W2";
-            this.W2.Name = "W2";
-            this.W2.ReadOnly = true;
-            // 
-            // Tn
-            // 
-            this.Tn.HeaderText = "Tn";
-            this.Tn.Name = "Tn";
-            this.Tn.ReadOnly = true;
-            // 
-            // Tx
-            // 
-            this.Tx.HeaderText = "Tx";
-            this.Tx.Name = "Tx";
-            this.Tx.ReadOnly = true;
-            // 
-            // Cl
-            // 
-            this.Cl.HeaderText = "Cl";
-            this.Cl.Name = "Cl";
-            this.Cl.ReadOnly = true;
-            // 
-            // Nh
-            // 
-            this.Nh.HeaderText = "Nh";
-            this.Nh.Name = "Nh";
-            this.Nh.ReadOnly = true;
-            // 
-            // H
-            // 
-            this.H.HeaderText = "H";
-            this.H.Name = "H";
-            this.H.ReadOnly = true;
-            // 
-            // Cm
-            // 
-            this.Cm.HeaderText = "Cm";
-            this.Cm.Name = "Cm";
-            this.Cm.ReadOnly = true;
-            // 
-            // Ch
-            // 
-            this.Ch.HeaderText = "Ch";
-            this.Ch.Name = "Ch";
-            this.Ch.ReadOnly = true;
-            // 
-            // VV
-            // 
-            this.VV.HeaderText = "VV";
-            this.VV.Name = "VV";
-            this.VV.ReadOnly = true;
-            // 
-            // Td
-            // 
-            this.Td.HeaderText = "Td";
-            this.Td.Name = "Td";
-            this.Td.ReadOnly = true;
-            // 
-            // RRR
-            // 
-            this.RRR.HeaderText = "RRR";
-            this.RRR.Name = "RRR";
-            this.RRR.ReadOnly = true;
-            // 
-            // tR
-            // 
-            this.tR.HeaderText = "tR";
-            this.tR.Name = "tR";
-            this.tR.ReadOnly = true;
+            this.output__tab_assigments.Location = new System.Drawing.Point(4, 22);
+            this.output__tab_assigments.Name = "output__tab_assigments";
+            this.output__tab_assigments.Padding = new System.Windows.Forms.Padding(3);
+            this.output__tab_assigments.Size = new System.Drawing.Size(1006, 355);
+            this.output__tab_assigments.TabIndex = 3;
+            this.output__tab_assigments.Text = "Присваивания";
+            this.output__tab_assigments.UseVisualStyleBackColor = true;
             // 
             // FormOutput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1013, 455);
-            this.Controls.Add(this.output__table);
+            this.ClientSize = new System.Drawing.Size(1013, 435);
+            this.Controls.Add(this.output_tabs);
             this.Controls.Add(this.button1);
             this.Name = "FormOutput";
             this.Text = "FormOutput";
             ((System.ComponentModel.ISupportInitialize)(this.output__table)).EndInit();
+            this.output_tabs.ResumeLayout(false);
+            this.output__tab_table.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -254,28 +211,18 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView output__table;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sort;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn T;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Po;
-        private System.Windows.Forms.DataGridViewTextBoxColumn P;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Pa;
-        private System.Windows.Forms.DataGridViewTextBoxColumn U;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DD;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ff;
-        private System.Windows.Forms.DataGridViewTextBoxColumn N;
-        private System.Windows.Forms.DataGridViewTextBoxColumn WW;
-        private System.Windows.Forms.DataGridViewTextBoxColumn W1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn W2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tx;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cl;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn H;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ch;
-        private System.Windows.Forms.DataGridViewTextBoxColumn VV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Td;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RRR;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Iterations;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Swaps;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Assigments;
+        private System.Windows.Forms.TabControl output_tabs;
+        private System.Windows.Forms.TabPage output__tab_table;
+        private System.Windows.Forms.TabPage output__tab_time;
+        private System.Windows.Forms.TabPage output__tab_iterations;
+        private System.Windows.Forms.TabPage output__tab_swaps;
+        private System.Windows.Forms.TabPage output__tab_assigments;
     }
 }

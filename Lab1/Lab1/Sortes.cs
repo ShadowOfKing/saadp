@@ -7,6 +7,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Data;
 using System.Data.OleDb;
+using System.Reflection;
 
 namespace Lab1
 {
@@ -607,9 +608,112 @@ namespace Lab1
         
     }
 
+    public class SimpleWrap<T> where T: IComparable<T>, ICloneable<T>, Values
+    {
+        object item;
+        Type type;
+    }
+
+    public static class OutSort<T> where T : IComparable<T>, ICloneable<T>, Values
+    {
+        private static long time;
+        private static int count;
+        private static bool firstRead;
+        public static long Time
+        {
+            get
+            {
+                return time;
+            }
+        }
+        public static long Count
+        {
+            get
+            {
+                return count;
+            }
+        }
+
+        private delegate void SortFunc(string filename, bool isSimple);
+        private static void ApplySort(SortFunc sort, string filename, bool isSimple)
+        {
+            var type = typeof(T);
+            var builder = type.GetMethod("ReadItem",
+                                    BindingFlags.Public | BindingFlags.Static);
+            if (builder == null)
+            {
+                throw new Exception();
+            }
+            time = 0;
+            count = 0; 
+            firstRead = false;
+            System.Diagnostics.Stopwatch swatch = new System.Diagnostics.Stopwatch();
+            swatch.Start();
+            sort(filename, isSimple);
+            swatch.Stop();
+            time = swatch.ElapsedMilliseconds;
+        }
+
+        private static void SimpleSort(string file0, string file1, string file2, int seriesLength, bool isSimple)
+        {
+            if (seriesLength >= Count)
+            {
+                return;
+            }
+            using (StreamReader reader = new StreamReader(file0))
+            {
+                using (StreamWriter writer1 = new StreamWriter(file1))
+                {
+                    using (StreamWriter writer2 = new StreamWriter(file2))
+                    {
+                        if (isSimple)
+                        {
+
+                        } else
+                        {
+
+                        }
+                    }
+                }
+            }
+            SimpleSort(file0, file1, file2, seriesLength * 2, isSimple);
+
+        }
+        private static void ApplySimple(string filename, bool isSimple)
+        {
+            string copyFileName1 = "Lab1.TempSort1";
+            string copyFileName2 = "Lab1.TempSort2";
+            File.Create(copyFileName1);
+            File.Create(copyFileName2);
+        }
+        private static void ApplyNature(string filename, bool isSimple)
+        {
+
+        }
+        private static void ApplyMultiple(string filename, bool isSimple)
+        {
+
+        }
+
+        public static void Simple(string filename, bool isSimple)
+        {
+            ApplySort(ApplySimple, filename, isSimple);
+        }
+        public static void Nature(string filename, bool isSimple)
+        {
+            ApplySort(ApplyNature, filename, isSimple);
+        }
+        public static void Multiple(string filename, bool isSimple)
+        {
+            ApplySort(ApplyMultiple, filename, isSimple);
+        }
+
+    }
+
     public class Sortes
     {
-        private delegate void SortF(ref List<WeatherData> data);
+        public delegate void SortF(ref List<WeatherData> data);
+        public delegate void OutSortF(string filename);
         private static string outFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");
         private static void AddToFile(string s)
         {
@@ -645,55 +749,59 @@ namespace Lab1
             {
                 string output = JsonConvert.SerializeObject(ar);
                 string outPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
+                WriteData(output, outPath);
+            }
+        }
 
-                void WriteTabs(int count, StreamWriter w)
+        public static void WriteData(string output, string outPath)
+        {
+            void WriteTabs(int count, StreamWriter w)
+            {
+                for (var i = 0; i < count; i++)
                 {
-                    for (var i = 0; i < count; i++)
-                    {
-                        w.Write('\t');
-                    }
+                    w.Write('\t');
                 }
-
-                using (StreamWriter writer = new StreamWriter(outPath))
+            }
+            using (StreamWriter writer = new StreamWriter(outPath))
+            {
+                int lvl = 0;
+                for (var i = 0; i < output.Length; i++)
                 {
-                    int lvl = 0;
-                    for (var i = 0; i < output.Length; i++)
+                    if (output[i] == '[' || output[i] == '{')
                     {
-                        if (output[i] == '[' || output[i] == '{')
-                        {
-                            //if (i > 0 && output[i] != ']' && output[i] != '}' && (i < 2 || output[i - 2] != ']' && output[i - 2] != '}')) { 
-                                writer.WriteLine();
-                            //}
-                            WriteTabs(lvl, writer);
-                            writer.Write(output[i]);
-                            lvl++;
-                            writer.WriteLine();
-                            WriteTabs(lvl, writer);
-                            continue;
-                        }
-                        if (output[i] == ']' || output[i] == '}')
-                        {
-                            writer.WriteLine();
-                            lvl--;
-                            WriteTabs(lvl, writer);
-                            writer.Write(output[i]);
-                            if (i < output.Length - 1 && output[i + 1] == ',')
-                            {
-                                writer.WriteLine(',');
-                                i++;
-                            } else
-                            {
-                                writer.WriteLine();
-                            }
-                            WriteTabs(lvl, writer);
-                            continue;
-                        }
+                        //if (i > 0 && output[i] != ']' && output[i] != '}' && (i < 2 || output[i - 2] != ']' && output[i - 2] != '}')) { 
+                        writer.WriteLine();
+                        //}
+                        WriteTabs(lvl, writer);
                         writer.Write(output[i]);
-                        if (output[i] == ',')
+                        lvl++;
+                        writer.WriteLine();
+                        WriteTabs(lvl, writer);
+                        continue;
+                    }
+                    if (output[i] == ']' || output[i] == '}')
+                    {
+                        writer.WriteLine();
+                        lvl--;
+                        WriteTabs(lvl, writer);
+                        writer.Write(output[i]);
+                        if (i < output.Length - 1 && output[i + 1] == ',')
+                        {
+                            writer.WriteLine(',');
+                            i++;
+                        }
+                        else
                         {
                             writer.WriteLine();
-                            WriteTabs(lvl, writer);
                         }
+                        WriteTabs(lvl, writer);
+                        continue;
+                    }
+                    writer.Write(output[i]);
+                    if (output[i] == ',')
+                    {
+                        writer.WriteLine();
+                        WriteTabs(lvl, writer);
                     }
                 }
             }
@@ -701,7 +809,7 @@ namespace Lab1
 
         public static List<WeatherData> ReadData(string path)
         {
-            var str = System.IO.File.ReadAllText(path);
+            var str = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<List<WeatherData>>(str);
         }
 
@@ -849,6 +957,28 @@ namespace Lab1
             //AddToFile("}");
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
+        }
+    }
+
+    public class SortResult
+    {
+        public Sortes.SortF SortType { get; }
+        public short DataType { get; }
+        public long ItemsCount { get; }
+        public long Time { get; }
+        public long Iterations { get; }
+        public long Swaps { get; }
+        public long Assigments { get; }
+
+        public SortResult(Sortes.SortF sortType, short dataType, long itemsCount, long time, long iterations, long swaps, long assigments)
+        {
+            SortType = sortType;
+            DataType = dataType;
+            ItemsCount = itemsCount;
+            Time = time;
+            Iterations = iterations;
+            Swaps = swaps;
+            Assigments = assigments;
         }
     }
 }
