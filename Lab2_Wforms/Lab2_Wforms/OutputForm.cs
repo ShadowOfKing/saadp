@@ -50,73 +50,35 @@ namespace Lab2_Wforms
             results.Clear();
         }
 
-        private void SetGraphs()
+        public void SetGraphs()
         {
+            results.Sort((a, b) =>
+            {
+                return a.Count == b.Count ? (a.SortType == b.SortType ? 0 : a.SortType > b.SortType ? 1 : -1) : a.Count > b.Count ? 1 : -1;
+            });
             foreach (var chart in graphs) { 
-                /*for (var i = 0; i < chart.Series.Count; i++)
+                for (var i = 0; i < chart.Series.Count; i++)
                 {
                     chart.Series[i].Points.Clear();
                 }
-                var dataType = -1;
+                var elementsType = false;
                 switch (chart.Name)
                 {
-                    case "output__graph__iterations_rand":
-                    case "output__graph__time_rand":
-                    case "output__graph__swaps_rand":
-                    case "output__graph__assigments_rand":
-                        dataType = 0;
+                    case "output__graph__graph_number":
+                        elementsType = true;
                         break;
-                    case "output__graph__iterations_inc":
-                    case "output__graph__time_inc":
-                    case "output__graph__swaps_inc":
-                    case "output__graph__assigments_inc":
-                        dataType = 1;
-                        break;
-                    case "output__graph__iterations_dec":
-                    case "output__graph__time_dec":
-                    case "output__graph__swaps_dec":
-                    case "output__graph__assigments_dec":
-                        dataType = 2;
-                        break;
-                }
-                if (dataType == -1 || results.Count == 0)
-                {
-                    return;
-                }
-
-                var paramType = -1;
-                switch (chart.Name)
-                {
-                    case "output__graph__time_rand":
-                    case "output__graph__time_inc":
-                    case "output__graph__time_dec":
-                        paramType = 0;
-                        break;
-                    case "output__graph__iterations_rand":
-                    case "output__graph__iterations_inc":
-                    case "output__graph__iterations_dec":
-                        paramType = 1;
-                        break;
-                    case "output__graph__swaps_rand":
-                    case "output__graph__swaps_inc":
-                    case "output__graph__swaps_dec":
-                        paramType = 2;
-                        break;
-                    case "output__graph__assigments_rand":
-                    case "output__graph__assigments_inc":
-                    case "output__graph__assigments_dec":
-                        paramType = 3;
+                    case "output__graph__graph_struct":
+                        elementsType = false;
                         break;
                 }
                 var hide = true;
                 for (var i = 0; i < results.Count; i++)
                 {
-                    if (results[i].DataType == dataType)
+                    if (results[i].ElementsType == elementsType)
                     {
                         var result = results[i];
                         var sort = result.SortType;
-                        string sortName = sort == Sort<WeatherData>.Bubble ? "Пузырёк" : sort == Sort<WeatherData>.Shells ? "Шелла" :
-                            sort == Sort<WeatherData>.Merge ? "Слиянием" : "Гномья";
+                        string sortName = sort == 0 ? "Простая" : sort == 1 ? "Естественная" : "Многопутёвая";
                         int index = -1;
                         for (var ii = 0; ii < sortNames.Length; ii++)
                         {
@@ -130,8 +92,15 @@ namespace Lab2_Wforms
                         {
                             continue;
                         }
-                        chart.Series[index].Points.AddXY(result.ItemsCount, paramType == 0 ? result.Time : paramType == 1 ? result.Iterations
-                            : paramType == 2 ? result.Swaps : result.Assigments);
+                        var count = 0.0;
+                        long time = 0;
+                        for(; i < results.Count && results[i].SortType == sort && results[i].Count == result.Count; i++)
+                        {
+                            count++;
+                            time += results[i].Time;
+                        }
+                        i--;
+                        chart.Series[index].Points.AddXY(result.Count, time / count);
                         hide = false;
                     }
                 }
@@ -148,12 +117,12 @@ namespace Lab2_Wforms
                 }
                 if (hide == true)
                 {
-                    chart.Hide();
+                    //chart.Hide();
                 }
                 else
                 {
-                    chart.Show();
-                }*/
+                    //chart.Show();
+                }
             }
         }
 
@@ -194,7 +163,7 @@ namespace Lab2_Wforms
         {
             var parent = (Chart)sender;
             //MessageBox.Show(parent.Name, "Отрисовано", MessageBoxButtons.OK);
-            parent.Height = parent.Parent.Height / 3;
+            parent.Height = parent.Parent.Height / 2;
         }
     }
 }

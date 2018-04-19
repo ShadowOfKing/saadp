@@ -149,7 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 277);
+            this.ClientSize = new System.Drawing.Size(668, 282);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.input__sortType);
             this.Controls.Add(this.groupBox1);
@@ -159,7 +159,7 @@
             this.Controls.Add(this.input__file);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Внешние сортировки";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

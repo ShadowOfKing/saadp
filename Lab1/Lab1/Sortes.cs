@@ -686,7 +686,8 @@ namespace Lab1
             {
                 return null;
             }
-            try {
+            try
+            {
                 if (isSimple)
                 {
                     StringBuilder str = new StringBuilder();
@@ -702,13 +703,32 @@ namespace Lab1
                 {
                     return JsonConvert.DeserializeObject<WeatherData>(reader.ReadLine());
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception("Невозможно считать элемент из файла. Проверьте корректность входных данных.");
             }
         }
         private static int CompareItem(object item1, object item2, bool isSimple)
         {
+            if (item1 == null || item2 == null)
+            {
+                string errortext = null;
+                if (item1 == null)
+                {
+                    if (item2 == null)
+                    {
+                        errortext = "null items not compare.";
+                    } else
+                    {
+                        errortext = "first argument is null.";
+                    }
+                } else
+                {
+                    errortext = "second argument is null.";
+                }
+                throw new Exception("Error while comparing item: " + errortext);
+            }
             if (isSimple)
             {
                 double a = (double)item1;
@@ -723,276 +743,375 @@ namespace Lab1
 
         private static void SimpleSort(string file0, string file1, string file2, bool isSimple)
         {
-            SimpleSort(file0, file1, file2, 1, isSimple);
-        }
-
-        private static void SimpleSort(string file0, string file1, string file2, int seriesLength, bool isSimple)
-        {
-            if (seriesLength >= count && count != 0 && seriesLength != 1)
+            int seriesLength = 1;
+            do
             {
-                return;
-            }
-            using (StreamReader reader = new StreamReader(file0))
-            {
-                using (StreamWriter writer1 = new StreamWriter(file1))
+                using (StreamReader reader = new StreamReader(file0))
                 {
-                    using (StreamWriter writer2 = new StreamWriter(file2))
+                    using (StreamWriter writer1 = new StreamWriter(file1))
                     {
-                        int length = 0;
-                        while (!reader.EndOfStream)
+                        using (StreamWriter writer2 = new StreamWriter(file2))
                         {
-                            length++;
-                            for (var i = 0; i < seriesLength && !reader.EndOfStream; i++) { 
-                                var item = ReadItem(reader, isSimple);
-                                if (length % 2 == 0)
+                            int length = 0;
+                            while (!reader.EndOfStream)
+                            {
+                                length++;
+                                for (var i = 0; i < seriesLength && !reader.EndOfStream; i++)
                                 {
-                                    WriteItem(writer1, item, isSimple);
-                                }
-                                else
-                                {
-                                    WriteItem(writer2, item, isSimple);
+                                    var item = ReadItem(reader, isSimple);
+                                    if (length % 2 == 0)
+                                    {
+                                        WriteItem(writer1, item, isSimple);
+                                    }
+                                    else
+                                    {
+                                        WriteItem(writer2, item, isSimple);
+                                    }
                                 }
                             }
-                        }
-                        if (count == 0)
-                        {
-                            count = length;
+                            if (count == 0)
+                            {
+                                count = length;
+                            }
                         }
                     }
                 }
-            }
-            var inp = File.Create(file0);
-            inp.Close();
-            using (StreamWriter writer = new StreamWriter(file0))
-            {
-                using (StreamReader reader1 = new StreamReader(file1))
+                var inp = File.Create(file0);
+                inp.Close();
+                using (StreamWriter writer = new StreamWriter(file0))
                 {
-                    using (StreamReader reader2 = new StreamReader(file2))
+                    using (StreamReader reader1 = new StreamReader(file1))
                     {
-                        while (!reader1.EndOfStream && !reader2.EndOfStream)
+                        using (StreamReader reader2 = new StreamReader(file2))
                         {
-                            var read1Count = 0;
-                            var read2Count = 0;
-                            object prevItem1 = null;
-                            object prevItem2 = null;
-                            while (read1Count < seriesLength && read2Count < seriesLength && !reader1.EndOfStream && !reader2.EndOfStream) { 
-                                if (prevItem1 == null)
-                                {
-                                    prevItem1 = ReadItem(reader1, isSimple);
-                                    read1Count++;
-                                }
-                                if (prevItem2 == null)
-                                {
-                                    prevItem2 = ReadItem(reader2, isSimple);
-                                    read2Count++;
-                                }
-                                if (CompareItem(prevItem1, prevItem2, isSimple) == -1)
-                                {
-                                    WriteItem(writer, prevItem1, isSimple);
-                                    prevItem1 = null;
-                                }
-                                else
-                                {
-                                    WriteItem(writer, prevItem2, isSimple);
-                                    prevItem2 = null;
-                                }
-                            }
-                            if (prevItem1 != null)
+                            while (!reader1.EndOfStream && !reader2.EndOfStream)
                             {
-                                while (read2Count < seriesLength && !reader2.EndOfStream)
+                                var read1Count = 0;
+                                var read2Count = 0;
+                                object prevItem1 = null;
+                                object prevItem2 = null;
+                                while (read1Count < seriesLength && read2Count < seriesLength && !reader1.EndOfStream && !reader2.EndOfStream)
                                 {
-                                    prevItem2 = ReadItem(reader2, isSimple);
-                                    if (prevItem1 != null && CompareItem(prevItem1, prevItem2, isSimple) == -1)
+                                    if (prevItem1 == null)
+                                    {
+                                        prevItem1 = ReadItem(reader1, isSimple);
+                                        read1Count++;
+                                    }
+                                    if (prevItem2 == null)
+                                    {
+                                        prevItem2 = ReadItem(reader2, isSimple);
+                                        read2Count++;
+                                    }
+                                    if (CompareItem(prevItem1, prevItem2, isSimple) == -1)
                                     {
                                         WriteItem(writer, prevItem1, isSimple);
                                         prevItem1 = null;
                                     }
-                                    WriteItem(writer, prevItem2, isSimple);
-                                    prevItem2 = null;
-                                    read2Count++;
-                                }
-                                if (prevItem1 != null) {
-                                    WriteItem(writer, prevItem1, isSimple);
-                                    prevItem1 = null;
-                                }
-                            } else if (prevItem2 != null)
-                            {
-                                while (read1Count < seriesLength && !reader1.EndOfStream)
-                                {
-                                    prevItem1 = ReadItem(reader1, isSimple);
-                                    if (prevItem2 != null && CompareItem(prevItem1, prevItem2, isSimple) == 1)
+                                    else
                                     {
                                         WriteItem(writer, prevItem2, isSimple);
                                         prevItem2 = null;
                                     }
+                                }
+                                if (prevItem1 != null)
+                                {
+                                    while (read2Count < seriesLength && !reader2.EndOfStream)
+                                    {
+                                        prevItem2 = ReadItem(reader2, isSimple);
+                                        if (prevItem1 != null && CompareItem(prevItem1, prevItem2, isSimple) == -1)
+                                        {
+                                            WriteItem(writer, prevItem1, isSimple);
+                                            prevItem1 = null;
+                                        }
+                                        WriteItem(writer, prevItem2, isSimple);
+                                        prevItem2 = null;
+                                        read2Count++;
+                                    }
+                                    if (prevItem1 != null)
+                                    {
+                                        WriteItem(writer, prevItem1, isSimple);
+                                        prevItem1 = null;
+                                    }
+                                }
+                                else if (prevItem2 != null)
+                                {
+                                    while (read1Count < seriesLength && !reader1.EndOfStream)
+                                    {
+                                        prevItem1 = ReadItem(reader1, isSimple);
+                                        if (prevItem2 != null && CompareItem(prevItem1, prevItem2, isSimple) == 1)
+                                        {
+                                            WriteItem(writer, prevItem2, isSimple);
+                                            prevItem2 = null;
+                                        }
+                                        WriteItem(writer, prevItem1, isSimple);
+                                        prevItem1 = null;
+                                        read1Count++;
+                                    }
+                                    if (prevItem2 != null)
+                                    {
+                                        WriteItem(writer, prevItem2, isSimple);
+                                        prevItem2 = null;
+                                    }
+                                }
+                                while (!reader1.EndOfStream && read1Count < seriesLength)
+                                {
+                                    prevItem1 = ReadItem(reader1, isSimple);
                                     WriteItem(writer, prevItem1, isSimple);
-                                    prevItem1 = null;
                                     read1Count++;
                                 }
-                                if (prevItem2 != null)
+                                while (!reader2.EndOfStream && read2Count < seriesLength)
                                 {
+                                    prevItem2 = ReadItem(reader2, isSimple);
                                     WriteItem(writer, prevItem2, isSimple);
-                                    prevItem2 = null;
+                                    read2Count++;
                                 }
-                            }
-                            while (!reader1.EndOfStream && read1Count < seriesLength)
-                            {
-                                prevItem1 = ReadItem(reader1, isSimple);
-                                WriteItem(writer, prevItem1, isSimple);
-                                read1Count++;
-                            }
-                            while (!reader2.EndOfStream && read2Count < seriesLength)
-                            {
-                                prevItem2 = ReadItem(reader2, isSimple);
-                                WriteItem(writer, prevItem2, isSimple);
-                                read2Count++;
-                            }
 
-                        }
-                        while (!reader1.EndOfStream)
-                        {
-                            WriteItem(writer, ReadItem(reader1, isSimple), isSimple);
-                        }
-                        while (!reader2.EndOfStream)
-                        {
-                            WriteItem(writer, ReadItem(reader2, isSimple), isSimple);
+                            }
+                            while (!reader1.EndOfStream)
+                            {
+                                WriteItem(writer, ReadItem(reader1, isSimple), isSimple);
+                            }
+                            while (!reader2.EndOfStream)
+                            {
+                                WriteItem(writer, ReadItem(reader2, isSimple), isSimple);
+                            }
                         }
                     }
                 }
-            }
-            SimpleSort(file0, file1, file2, seriesLength * 2, isSimple);
-
+                seriesLength *= 2;
+            } while (seriesLength < count);
+            return;
         }
         private static void NatureSort(string file0, string file1, string file2, bool isSimple)
         {
             bool sorted = true;
-            using (StreamReader reader = new StreamReader(file0))
+            do
             {
-                var item1 = ReadItem(reader, isSimple);
-                using (StreamWriter writer1 = new StreamWriter(file1))
+                bool switchFiles = false;
+                sorted = true;
+                using (StreamReader reader = new StreamReader(file0))
                 {
-                    using (StreamWriter writer2 = new StreamWriter(file2))
+                    var item1 = ReadItem(reader, isSimple);
+                    using (StreamWriter writer1 = new StreamWriter(file1))
                     {
-                        while (!reader.EndOfStream)
+                        using (StreamWriter writer2 = new StreamWriter(file2))
                         {
-                            var item2 = ReadItem(reader, isSimple);
-                            if (CompareItem(item1, item2, isSimple) == -1)
+                            while (!reader.EndOfStream)
                             {
-                                WriteItem(writer1, item1, isSimple);
-                            }
-                            else
-                            {
-                                WriteItem(writer2, item1, isSimple);
-                            }
-                            item1 = item2;
-                        }
-                        if (item1 != null)
-                        {
-                            WriteItem(writer1, item1, isSimple);
-                        }
-                    }
-                }
-            }
-            var inp = File.Create(file0);
-            inp.Close();
-            using (StreamWriter writer = new StreamWriter(file0))
-            {
-                using (StreamReader reader1 = new StreamReader(file1))
-                {
-                    using (StreamReader reader2 = new StreamReader(file2))
-                    {
-                        while (!reader1.EndOfStream && !reader2.EndOfStream)
-                        {
-                            object prevItem1 = null;
-                            object prevItem2 = null;
-                            while (read1Count < seriesLength && read2Count < seriesLength && !reader1.EndOfStream && !reader2.EndOfStream)
-                            {
-                                if (prevItem1 == null)
+                                var item2 = ReadItem(reader, isSimple);
+                                if (!switchFiles)
                                 {
-                                    prevItem1 = ReadItem(reader1, isSimple);
-                                }
-                                if (prevItem2 == null)
-                                {
-                                    prevItem2 = ReadItem(reader2, isSimple);
-                                }
-                                if (CompareItem(prevItem1, prevItem2, isSimple) == -1)
-                                {
-                                    WriteItem(writer, prevItem1, isSimple);
-                                    prevItem1 = null;
+                                    WriteItem(writer1, item1, isSimple);
                                 }
                                 else
                                 {
-                                    WriteItem(writer, prevItem2, isSimple);
-                                    prevItem2 = null;
+                                    WriteItem(writer2, item1, isSimple);
                                 }
-                            }
-                            if (prevItem1 != null)
-                            {
-                                while (read2Count < seriesLength && !reader2.EndOfStream)
+                                if (CompareItem(item1, item2, isSimple) == 1)
                                 {
-                                    prevItem2 = ReadItem(reader2, isSimple);
-                                    if (prevItem1 != null && CompareItem(prevItem1, prevItem2, isSimple) == -1)
-                                    {
-                                        WriteItem(writer, prevItem1, isSimple);
-                                        prevItem1 = null;
-                                    }
-                                    WriteItem(writer, prevItem2, isSimple);
-                                    prevItem2 = null;
-                                    read2Count++;
+                                    sorted = false;
+                                    switchFiles = !switchFiles;
                                 }
-                                if (prevItem1 != null)
-                                {
-                                    WriteItem(writer, prevItem1, isSimple);
-                                    prevItem1 = null;
-                                }
+                                item1 = item2;
                             }
-                            else if (prevItem2 != null)
+                            if (item1 != null)
                             {
-                                while (read1Count < seriesLength && !reader1.EndOfStream)
-                                {
-                                    prevItem1 = ReadItem(reader1, isSimple);
-                                    if (prevItem2 != null && CompareItem(prevItem1, prevItem2, isSimple) == 1)
-                                    {
-                                        WriteItem(writer, prevItem2, isSimple);
-                                        prevItem2 = null;
-                                    }
-                                    WriteItem(writer, prevItem1, isSimple);
-                                    prevItem1 = null;
-                                    read1Count++;
-                                }
-                                if (prevItem2 != null)
-                                {
-                                    WriteItem(writer, prevItem2, isSimple);
-                                    prevItem2 = null;
-                                }
+                                WriteItem(writer1, item1, isSimple);
                             }
-                            while (!reader1.EndOfStream && read1Count < seriesLength)
-                            {
-                                prevItem1 = ReadItem(reader1, isSimple);
-                                WriteItem(writer, prevItem1, isSimple);
-                                read1Count++;
-                            }
-                            while (!reader2.EndOfStream && read2Count < seriesLength)
-                            {
-                                prevItem2 = ReadItem(reader2, isSimple);
-                                WriteItem(writer, prevItem2, isSimple);
-                                read2Count++;
-                            }
-
-                        }
-                        while (!reader1.EndOfStream)
-                        {
-                            WriteItem(writer, ReadItem(reader1, isSimple), isSimple);
-                        }
-                        while (!reader2.EndOfStream)
-                        {
-                            WriteItem(writer, ReadItem(reader2, isSimple), isSimple);
                         }
                     }
                 }
+                var inp = File.Create(file0);
+                inp.Close();
+                using (StreamWriter writer = new StreamWriter(file0))
+                {
+                    using (StreamReader reader1 = new StreamReader(file1))
+                    {
+                        using (StreamReader reader2 = new StreamReader(file2))
+                        {
+                            if (sorted == false)
+                            {
+                                object item1 = null;
+                                object item2 = null;
+                                while (!reader1.EndOfStream || !reader2.EndOfStream)
+                                {
+                                    if (item1 == null)
+                                    {
+                                        item1 = ReadItem(reader1, isSimple);
+                                    }
+                                    if (item2 == null)
+                                    {
+                                        item2 = ReadItem(reader2, isSimple);
+                                    }
+                                    if (item1 != null && item2 != null)
+                                    {
+                                        if (CompareItem(item1, item2, isSimple) == -1)
+                                        {
+                                            WriteItem(writer, item1, isSimple);
+                                            item1 = null;
+                                        }
+                                        else
+                                        {
+                                            WriteItem(writer, item2, isSimple);
+                                            item2 = null;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item1 != null)
+                                        {
+                                            WriteItem(writer, item1, isSimple);
+                                            item1 = null;
+                                        }
+                                        else
+                                        {
+                                            WriteItem(writer, item2, isSimple);
+                                            item2 = null;
+                                        }
+                                    }
+                                }
+                                if (item1 != null)
+                                {
+                                    WriteItem(writer, item1, isSimple);
+                                }
+                                if (item2 != null)
+                                {
+                                    WriteItem(writer, item2, isSimple);
+                                }
+                            }
+                            else
+                            {
+                                count = 0;
+                                while (!reader1.EndOfStream)
+                                {
+                                    WriteItem(writer, ReadItem(reader1, isSimple), isSimple);
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+                }
+            } while (sorted == false);
+            return;
+        }
+        private static void MultipleSort(string fileIn, bool isSimple)
+        {
+            string fileOut = "Lab1.TempSort2-";
+            int fileInCount = 1;
+            int fileOutCount = 1;
+            var fIn = fileIn;
+            var fOut = fileOut;
+            bool swap = false;
+            count = 0;
+            do
+            {
+                object lastItem = null;
+                var readers = new List<StreamReader>();
+                var writers = new List<StreamWriter>();
+                try
+                {
+                    var f = File.Create(fOut.ToString() + fileOutCount);
+                    f.Close();
+                    writers.Add(new StreamWriter(fOut.ToString() + fileOutCount));
+                    for (var i = 1; i <= fileInCount; i++)
+                    {
+                        readers.Add(new StreamReader(fIn.ToString() + i));
+                    }
+                    var topValues = new object[fileInCount];
+                    bool allEmpty = false;
+                    do
+                    {
+                        if (fileInCount == 1)
+                        {
+                            count++;
+                        }
+                        allEmpty = true;
+                        int minIndex = -1;
+                        for (var i = 0; i < fileInCount; i++)
+                        {
+                            if (topValues[i] == null)
+                            {
+                                topValues[i] = ReadItem(readers[i], isSimple);
+                            }
+                            if (topValues[i] != null && minIndex < 0)
+                            {
+                                minIndex = i;
+                            }
+                        }
+                        if (minIndex != -1)
+                        {
+                            for (var i = minIndex + 1; i < fileInCount; i++)
+                            {
+                                if (topValues[i] != null && CompareItem(topValues[minIndex], topValues[i], isSimple) == 1)
+                                {
+                                    minIndex = i;
+                                }
+                            }
+                            if (lastItem != null && CompareItem(topValues[minIndex], lastItem, isSimple) == -1)
+                            {
+                                fileOutCount++;
+                                f = File.Create(fOut.ToString() + fileOutCount);
+                                f.Close();
+                                writers.Add(new StreamWriter(fOut.ToString() + fileOutCount));
+                            }
+                            lastItem = topValues[minIndex];
+                            topValues[minIndex] = null;
+                            WriteItem(writers[writers.Count - 1], lastItem, isSimple);
+                        }
+                        else
+                        {
+                            for (var i = 0; i < readers.Count; i++)
+                            {
+                                readers[i].Dispose();
+                            }
+                            for (var i = 0; i < writers.Count; i++)
+                            {
+                                writers[i].Dispose();
+                                File.Delete(fOut + i);
+                            }
+                            throw new Exception("Unknown exception. All input files is empty.");
+                        }
+                        for (var i = 0; i < fileInCount; i++)
+                        {
+                            if (!readers[i].EndOfStream || topValues[i] != null)
+                            {
+                                allEmpty = false;
+                            }
+                        }
+                    } while (!allEmpty);
+                }
+                finally
+                {
+                    for (var i = 0; i < readers.Count; i++)
+                    {
+                        readers[i].Dispose();
+                        File.Delete(fIn + (i + 1));
+                    }
+                    for (var i = 0; i < writers.Count; i++)
+                    {
+                        writers[i].Dispose();
+                    }
+                }
+                swap = !swap;
+                if (swap)
+                {
+                    fIn = fileOut;
+                    fOut = fileIn;
+                }
+                else
+                {
+                    fIn = fileIn;
+                    fOut = fileOut;
+                }
+                fileInCount = fileOutCount;
+                fileOutCount = 1;
+            } while (fileInCount != 1);
+            if (swap)
+            {
+                File.Copy(fOut + 1, fIn + 1, true);
+                File.Delete(fOut + 1);
             }
-            SimpleSort(file0, file1, file2, seriesLength * 2, isSimple);
-
+            return;
         }
         private static void ApplySimple(string filename, bool isSimple)
         {
@@ -1002,9 +1121,12 @@ namespace Lab1
             f.Close();
             f = File.Create(copyFileName2);
             f.Close();
-            try { 
+            try
+            {
                 SimpleSort(filename, copyFileName1, copyFileName2, isSimple);
-            } finally { 
+            }
+            finally
+            {
                 File.Delete(copyFileName1);
                 File.Delete(copyFileName2);
             }
@@ -1029,7 +1151,10 @@ namespace Lab1
         }
         private static void ApplyMultiple(string filename, bool isSimple)
         {
-
+            File.Copy(filename, filename + 1, true);
+            MultipleSort(filename, isSimple);
+            File.Copy(filename + 1, filename, true);
+            File.Delete(filename + 1);
         }
 
         public static void Simple(string filename, bool isSimple)

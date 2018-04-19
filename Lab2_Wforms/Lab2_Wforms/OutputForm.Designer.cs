@@ -30,12 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.output_graphs = new System.Windows.Forms.TabPage();
             this.output_data_result = new System.Windows.Forms.DataGridView();
             this.sortType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sortElemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sortElemCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sortTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.output_graphs = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.output_data_result)).BeginInit();
@@ -48,7 +48,7 @@
             this.tabControl1.Location = new System.Drawing.Point(1, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(965, 414);
+            this.tabControl1.Size = new System.Drawing.Size(965, 499);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -57,20 +57,10 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(957, 388);
+            this.tabPage1.Size = new System.Drawing.Size(957, 473);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.Text = "Таблица";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // output_graphs
-            // 
-            this.output_graphs.Location = new System.Drawing.Point(4, 22);
-            this.output_graphs.Name = "output_graphs";
-            this.output_graphs.Padding = new System.Windows.Forms.Padding(3);
-            this.output_graphs.Size = new System.Drawing.Size(957, 388);
-            this.output_graphs.TabIndex = 1;
-            this.output_graphs.Text = "Графики";
-            this.output_graphs.UseVisualStyleBackColor = true;
             // 
             // output_data_result
             // 
@@ -88,7 +78,7 @@
             this.output_data_result.Location = new System.Drawing.Point(3, 3);
             this.output_data_result.Name = "output_data_result";
             this.output_data_result.ReadOnly = true;
-            this.output_data_result.Size = new System.Drawing.Size(951, 382);
+            this.output_data_result.Size = new System.Drawing.Size(951, 467);
             this.output_data_result.TabIndex = 0;
             // 
             // sortType
@@ -114,6 +104,16 @@
             this.sortTime.HeaderText = "Время сортировки (сек)";
             this.sortTime.Name = "sortTime";
             this.sortTime.ReadOnly = true;
+            // 
+            // output_graphs
+            // 
+            this.output_graphs.Location = new System.Drawing.Point(4, 22);
+            this.output_graphs.Name = "output_graphs";
+            this.output_graphs.Padding = new System.Windows.Forms.Padding(3);
+            this.output_graphs.Size = new System.Drawing.Size(957, 473);
+            this.output_graphs.TabIndex = 1;
+            this.output_graphs.Text = "Графики";
+            this.output_graphs.UseVisualStyleBackColor = true;
             // 
             // OutputForm
             // 

@@ -47,12 +47,12 @@ namespace Lab2_WForms
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "input files (*.in)|*.in|text files (*.txt)|*.txt|All files (*.*)|*.*";
+            dialog.Multiselect = true;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    var path = dialog.FileName;
-                    this.input__file.Text = path;
+                    this.input__file.Text = string.Join("|", dialog.FileNames);
                 }
                 catch (Exception ex)
                 {
@@ -70,44 +70,51 @@ namespace Lab2_WForms
                 MessageBox.Show("Ошибка. Статистика сортировки пуста.");
                 return;
             }
+            outputForm.SetGraphs();
             outputForm.ShowDialog();
             this.results.Clear();
         }
 
         private void SortData(object sender, EventArgs e)
         {
-            string inputFile = this.input__file.Text;
+            string formname = "Внешние сортировки";
             string copyFileName = "Lab2.Wforms.TempInput";
             var isNumber = this.input__dataType_number.Checked;
-            foreach (var i in input__sortType.CheckedIndices)
-            {
-                Sortes.OutSortF sort = null;
-                switch (int.Parse(i.ToString()))
+            string[] inputFiles = this.input__file.Text.Split('|');
+            for (var ii = 0; ii < inputFiles.Length; ii++) {
+                var inputFile = inputFiles[ii];
+                foreach (var i in input__sortType.CheckedIndices)
                 {
-                    case 0:
-                        sort = OutSort.Simple;
-                        break;
-                    case 1:
-                        sort = OutSort.Nature;
-                        break;
-                    case 2:
-                        sort = OutSort.Multiple;
-                        break;
+                    this.Text = formname + "(в процессе сортировки данных [сортировки: " + i + " из " + input__sortType.CheckedIndices.Count + "][файлы: " + ii + " из " + inputFiles.Length + "])";
+                    Sortes.OutSortF sort = null;
+                    switch (int.Parse(i.ToString()))
+                    {
+                        case 0:
+                            sort = OutSort.Simple;
+                            break;
+                        case 1:
+                            sort = OutSort.Nature;
+                            break;
+                        case 2:
+                            sort = OutSort.Multiple;
+                            break;
+                    }
+                    File.Copy(inputFile, copyFileName, true);
+                    try
+                    {
+                        sort(copyFileName, isNumber);
+                    } catch(Exception ex)
+                    {
+                        MessageBox.Show("Ошибка. " + ex.Message);
+                        return;
+                    } finally
+                    {
+                        File.Delete(copyFileName);
+                    }
+                    this.results.Add(new SortResult(isNumber, short.Parse(i.ToString()), OutSort.Count, OutSort.Time));
                 }
-                File.Copy(inputFile, copyFileName, true);
-                try
-                {
-                    sort(copyFileName, isNumber);
-                } catch(Exception ex)
-                {
-                    MessageBox.Show("Ошибка. " + ex.Message);
-                    return;
-                } finally
-                {
-                    File.Delete(copyFileName);
-                }
-                this.results.Add(new SortResult(isNumber, short.Parse(i.ToString()), OutSort.Count, OutSort.Time));
             }
+            this.Text = formname;
         }
 
         private void SelectSortType(object sender, EventArgs e)
