@@ -16,14 +16,14 @@ namespace Lab2_WForms
 {
     public partial class Form1 : Form
     {
-        private class SortResult
+        public class SortResult
         {
-            bool ElementsType { get; }
-            short SortType { get; }
-            int Count { get; }
-            long Time { get; }
+            public bool ElementsType { get; }
+            public short SortType { get; }
+            public long Count { get; }
+            public long Time { get; }
 
-            public SortResult(bool elementType, short sortType, int count, long time)
+            public SortResult(bool elementType, short sortType, long count, long time)
             {
                 ElementsType = elementType;
                 SortType = sortType;
@@ -46,7 +46,7 @@ namespace Lab2_WForms
         private void OpenFile(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog();
-            dialog.Filter = "text files (*.text)|*.txt|input files (*.in)|*.in|All files (*.*)|*.*";
+            dialog.Filter = "input files (*.in)|*.in|text files (*.txt)|*.txt|All files (*.*)|*.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -64,7 +64,14 @@ namespace Lab2_WForms
         
         private void OpenOutWindow(object sender, EventArgs e)
         {
-            
+            outputForm.AddData(this.results);
+            if (outputForm.Empty)
+            {
+                MessageBox.Show("Ошибка. Статистика сортировки пуста.");
+                return;
+            }
+            outputForm.ShowDialog();
+            this.results.Clear();
         }
 
         private void SortData(object sender, EventArgs e)
@@ -78,37 +85,28 @@ namespace Lab2_WForms
                 switch (int.Parse(i.ToString()))
                 {
                     case 0:
-                        if (isNumber)
-                        {
-                            sort = OutSort<double>.Simple;
-                        } else
-                        {
-                            sort = OutSort<WeatherData>.Simple;
-                        }
+                        sort = OutSort.Simple;
                         break;
                     case 1:
-                        if (isNumber)
-                        {
-                            sort = OutSort<double>.Nature;
-                        }
-                        else
-                        {
-                            sort = OutSort<WeatherData>.Nature;
-                        }
+                        sort = OutSort.Nature;
                         break;
                     case 2:
-                        if (isNumber)
-                        {
-                            sort = OutSort<double>.Multiple;
-                        }
-                        else
-                        {
-                            sort = OutSort<WeatherData>.Multiple;
-                        }
+                        sort = OutSort.Multiple;
                         break;
                 }
                 File.Copy(inputFile, copyFileName, true);
-                sort(copyFileName);
+                try
+                {
+                    sort(copyFileName, isNumber);
+                } catch(Exception ex)
+                {
+                    MessageBox.Show("Ошибка. " + ex.Message);
+                    return;
+                } finally
+                {
+                    File.Delete(copyFileName);
+                }
+                this.results.Add(new SortResult(isNumber, short.Parse(i.ToString()), OutSort.Count, OutSort.Time));
             }
         }
 
@@ -120,7 +118,7 @@ namespace Lab2_WForms
         private void ClearStatistic(object sender, EventArgs e)
         {
             this.results.Clear();
-            outputForm.Empty = true;
+            outputForm.ClearData();
         }
     }
 }

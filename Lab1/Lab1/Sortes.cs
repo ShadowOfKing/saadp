@@ -20,7 +20,13 @@ namespace Lab1
         int GetIntValue();
         double GetDoubleValue();
     }
-    public class WeatherData : IComparable<WeatherData>, ICloneable<WeatherData>, Values
+
+    public interface Initiatiable<T>
+    {
+        T Init();
+    }
+
+    public class WeatherData : IComparable<WeatherData>, ICloneable<WeatherData>, Values, Initiatiable<WeatherData>
     {
         public string Time;
         public int T;
@@ -46,7 +52,8 @@ namespace Lab1
         public int? RRR;
         public int? tR;
 
-        public WeatherData(string Time, int T,int? P0, int? P, int? Pa, int? U, string DD, int? Ff, string N, string WW, string W1, string W2, string Tn, string Tx, string Cl, string Nh, string H, string Cm, string Ch, int? VV, int? Td, int? RRR, int? tR)
+        private WeatherData() { }
+        public WeatherData(string Time, int T, int? P0, int? P, int? Pa, int? U, string DD, int? Ff, string N, string WW, string W1, string W2, string Tn, string Tx, string Cl, string Nh, string H, string Cm, string Ch, int? VV, int? Td, int? RRR, int? tR)
         {
             this.Time = Time;
             this.T = T;
@@ -95,6 +102,21 @@ namespace Lab1
         {
             return (double)T;
         }
+        public WeatherData Init()
+        {
+            return new WeatherData();
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{" +
+                    "Time: {0}, T: {1}, P0: {2}, P: {3}, Pa: {4}, U: {5}, DD: {6}, Ff: {7}, N: {8}," +
+                    " WW: {9}, W1: {10}, W2: {11}, Tn: {12}, Tx: {13}, Cl: {14}, Nh: {15}, H: {16}, Cm: {17}," +
+                    " Ch: {18}, W2: {19}, Td: {20}, RRR: {21}, tR: {22}: {23}" +
+                "}",
+                Time, T, P0, P, Pa, U, DD, Ff, N, WW, W1, W2, Tn, Tx, Cl, Nh, H, Cm, Ch, W2, Td, RRR, tR
+            );
+        }
     }
 
     public class BinarySearchTree<T> where T : IComparable<T>, ICloneable<T>
@@ -121,7 +143,7 @@ namespace Lab1
                 this.val = val.Clone();
             }
         }
-            
+
         private void AddNextElem(Node n, ref List<T> ar)
         {
             if (n != null)
@@ -142,12 +164,14 @@ namespace Lab1
             if (el == null)
             {
                 el = new Node(val);
-            } else
+            }
+            else
             {
                 if (val.CompareTo(el.Val) == -1)
                 {
                     Insert(ref el.Left, val);
-                } else
+                }
+                else
                 {
                     Insert(ref el.Right, val);
                 }
@@ -163,7 +187,8 @@ namespace Lab1
             if (val.CompareTo(head.Val) == -1)
             {
                 Insert(ref head.Left, val);
-            } else
+            }
+            else
             {
                 Insert(ref head.Right, val);
             }
@@ -198,7 +223,8 @@ namespace Lab1
                 return swaps;
             }
         }
-        public static long Assigments {
+        public static long Assigments
+        {
             get
             {
                 return assigments;
@@ -224,20 +250,23 @@ namespace Lab1
             }
             return n + r;
         }   //FOR Timsort
-        
+
         private static void Counting(ref List<T> data, T min, T max)
         {
             var br = new List<T>(data);
             int[] cr = new int[max.GetIntValue() - min.GetIntValue() + 1];
-            for (var i = 0; i < cr.Length; i++) { 
+            for (var i = 0; i < cr.Length; i++)
+            {
                 cr[i] = 0;
                 iterations++;
             }
-            for (var i = 0; i < data.Count; i++) { 
+            for (var i = 0; i < data.Count; i++)
+            {
                 cr[data[i].GetIntValue() - min.GetIntValue()] += 1;
                 iterations++;
             }
-            for (var i = 1; i < cr.Length; i++) { 
+            for (var i = 1; i < cr.Length; i++)
+            {
                 cr[i] += cr[i - 1];
                 iterations++;
             }
@@ -348,7 +377,7 @@ namespace Lab1
                 Quick(ref data, j + 1, r);
             }
         }
-        
+
         private static void ApplyBubble(ref List<T> data)
         {
             int i = 0;
@@ -368,7 +397,7 @@ namespace Lab1
                 i++;
             } while (!end);
         }
-        
+
         private static void ApplyComb(ref List<T> data)
         {
             double fakt = 1.2473309; // фактор уменьшения
@@ -546,7 +575,7 @@ namespace Lab1
             }
             data = tree.GetElements();
         }
-        
+
         private static void ApplySort(SortFunc sort, ref List<T> data)
         {
             time = 0;
@@ -564,7 +593,7 @@ namespace Lab1
         {
             ApplySort(ApplyBubble, ref data);
         }
-        
+
         public static void Comb(ref List<T> data)
         {
             ApplySort(ApplyComb, ref data);
@@ -605,20 +634,13 @@ namespace Lab1
         {
             ApplySort(ApplyTree, ref data);
         }
-        
+
     }
 
-    public class SimpleWrap<T> where T: IComparable<T>, ICloneable<T>, Values
-    {
-        object item;
-        Type type;
-    }
-
-    public static class OutSort<T> where T : IComparable<T>, ICloneable<T>, Values
+    public static class OutSort
     {
         private static long time;
         private static int count;
-        private static bool firstRead;
         public static long Time
         {
             get
@@ -637,16 +659,8 @@ namespace Lab1
         private delegate void SortFunc(string filename, bool isSimple);
         private static void ApplySort(SortFunc sort, string filename, bool isSimple)
         {
-            var type = typeof(T);
-            var builder = type.GetMethod("ReadItem",
-                                    BindingFlags.Public | BindingFlags.Static);
-            if (builder == null)
-            {
-                throw new Exception();
-            }
             time = 0;
-            count = 0; 
-            firstRead = false;
+            count = 0;
             System.Diagnostics.Stopwatch swatch = new System.Diagnostics.Stopwatch();
             swatch.Start();
             sort(filename, isSimple);
@@ -654,9 +668,67 @@ namespace Lab1
             time = swatch.ElapsedMilliseconds;
         }
 
+        private static void WriteItem(StreamWriter writer, object item, bool isSimple)
+        {
+            if (isSimple)
+            {
+                writer.Write(item.ToString());
+                writer.Write(' ');
+            }
+            else
+            {
+                writer.WriteLine(JsonConvert.SerializeObject((WeatherData)item));
+            }
+        }
+        private static object ReadItem(StreamReader reader, bool isSimple)
+        {
+            if (reader.EndOfStream)
+            {
+                return null;
+            }
+            try {
+                if (isSimple)
+                {
+                    StringBuilder str = new StringBuilder();
+                    Char c = ' ';
+                    do
+                    {
+                        c = (Char)reader.Read();
+                        str.Append(c);
+                    } while (!reader.EndOfStream && c != ' ' && c != '\n' && c != '\t');
+                    return double.Parse(str.ToString());
+                }
+                else
+                {
+                    return JsonConvert.DeserializeObject<WeatherData>(reader.ReadLine());
+                }
+            } catch (Exception ex)
+            {
+                throw new Exception("Невозможно считать элемент из файла. Проверьте корректность входных данных.");
+            }
+        }
+        private static int CompareItem(object item1, object item2, bool isSimple)
+        {
+            if (isSimple)
+            {
+                double a = (double)item1;
+                double b = (double)item2;
+                return (a == b) ? 0 : (a > b) ? 1 : -1;
+            }
+            else
+            {
+                return ((WeatherData)item1).CompareTo((WeatherData)item2);
+            }
+        }
+
+        private static void SimpleSort(string file0, string file1, string file2, bool isSimple)
+        {
+            SimpleSort(file0, file1, file2, 1, isSimple);
+        }
+
         private static void SimpleSort(string file0, string file1, string file2, int seriesLength, bool isSimple)
         {
-            if (seriesLength >= Count)
+            if (seriesLength >= count && count != 0 && seriesLength != 1)
             {
                 return;
             }
@@ -666,12 +738,255 @@ namespace Lab1
                 {
                     using (StreamWriter writer2 = new StreamWriter(file2))
                     {
-                        if (isSimple)
+                        int length = 0;
+                        while (!reader.EndOfStream)
                         {
-
-                        } else
+                            length++;
+                            for (var i = 0; i < seriesLength && !reader.EndOfStream; i++) { 
+                                var item = ReadItem(reader, isSimple);
+                                if (length % 2 == 0)
+                                {
+                                    WriteItem(writer1, item, isSimple);
+                                }
+                                else
+                                {
+                                    WriteItem(writer2, item, isSimple);
+                                }
+                            }
+                        }
+                        if (count == 0)
                         {
+                            count = length;
+                        }
+                    }
+                }
+            }
+            var inp = File.Create(file0);
+            inp.Close();
+            using (StreamWriter writer = new StreamWriter(file0))
+            {
+                using (StreamReader reader1 = new StreamReader(file1))
+                {
+                    using (StreamReader reader2 = new StreamReader(file2))
+                    {
+                        while (!reader1.EndOfStream && !reader2.EndOfStream)
+                        {
+                            var read1Count = 0;
+                            var read2Count = 0;
+                            object prevItem1 = null;
+                            object prevItem2 = null;
+                            while (read1Count < seriesLength && read2Count < seriesLength && !reader1.EndOfStream && !reader2.EndOfStream) { 
+                                if (prevItem1 == null)
+                                {
+                                    prevItem1 = ReadItem(reader1, isSimple);
+                                    read1Count++;
+                                }
+                                if (prevItem2 == null)
+                                {
+                                    prevItem2 = ReadItem(reader2, isSimple);
+                                    read2Count++;
+                                }
+                                if (CompareItem(prevItem1, prevItem2, isSimple) == -1)
+                                {
+                                    WriteItem(writer, prevItem1, isSimple);
+                                    prevItem1 = null;
+                                }
+                                else
+                                {
+                                    WriteItem(writer, prevItem2, isSimple);
+                                    prevItem2 = null;
+                                }
+                            }
+                            if (prevItem1 != null)
+                            {
+                                while (read2Count < seriesLength && !reader2.EndOfStream)
+                                {
+                                    prevItem2 = ReadItem(reader2, isSimple);
+                                    if (prevItem1 != null && CompareItem(prevItem1, prevItem2, isSimple) == -1)
+                                    {
+                                        WriteItem(writer, prevItem1, isSimple);
+                                        prevItem1 = null;
+                                    }
+                                    WriteItem(writer, prevItem2, isSimple);
+                                    prevItem2 = null;
+                                    read2Count++;
+                                }
+                                if (prevItem1 != null) {
+                                    WriteItem(writer, prevItem1, isSimple);
+                                    prevItem1 = null;
+                                }
+                            } else if (prevItem2 != null)
+                            {
+                                while (read1Count < seriesLength && !reader1.EndOfStream)
+                                {
+                                    prevItem1 = ReadItem(reader1, isSimple);
+                                    if (prevItem2 != null && CompareItem(prevItem1, prevItem2, isSimple) == 1)
+                                    {
+                                        WriteItem(writer, prevItem2, isSimple);
+                                        prevItem2 = null;
+                                    }
+                                    WriteItem(writer, prevItem1, isSimple);
+                                    prevItem1 = null;
+                                    read1Count++;
+                                }
+                                if (prevItem2 != null)
+                                {
+                                    WriteItem(writer, prevItem2, isSimple);
+                                    prevItem2 = null;
+                                }
+                            }
+                            while (!reader1.EndOfStream && read1Count < seriesLength)
+                            {
+                                prevItem1 = ReadItem(reader1, isSimple);
+                                WriteItem(writer, prevItem1, isSimple);
+                                read1Count++;
+                            }
+                            while (!reader2.EndOfStream && read2Count < seriesLength)
+                            {
+                                prevItem2 = ReadItem(reader2, isSimple);
+                                WriteItem(writer, prevItem2, isSimple);
+                                read2Count++;
+                            }
 
+                        }
+                        while (!reader1.EndOfStream)
+                        {
+                            WriteItem(writer, ReadItem(reader1, isSimple), isSimple);
+                        }
+                        while (!reader2.EndOfStream)
+                        {
+                            WriteItem(writer, ReadItem(reader2, isSimple), isSimple);
+                        }
+                    }
+                }
+            }
+            SimpleSort(file0, file1, file2, seriesLength * 2, isSimple);
+
+        }
+        private static void NatureSort(string file0, string file1, string file2, bool isSimple)
+        {
+            bool sorted = true;
+            using (StreamReader reader = new StreamReader(file0))
+            {
+                var item1 = ReadItem(reader, isSimple);
+                using (StreamWriter writer1 = new StreamWriter(file1))
+                {
+                    using (StreamWriter writer2 = new StreamWriter(file2))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var item2 = ReadItem(reader, isSimple);
+                            if (CompareItem(item1, item2, isSimple) == -1)
+                            {
+                                WriteItem(writer1, item1, isSimple);
+                            }
+                            else
+                            {
+                                WriteItem(writer2, item1, isSimple);
+                            }
+                            item1 = item2;
+                        }
+                        if (item1 != null)
+                        {
+                            WriteItem(writer1, item1, isSimple);
+                        }
+                    }
+                }
+            }
+            var inp = File.Create(file0);
+            inp.Close();
+            using (StreamWriter writer = new StreamWriter(file0))
+            {
+                using (StreamReader reader1 = new StreamReader(file1))
+                {
+                    using (StreamReader reader2 = new StreamReader(file2))
+                    {
+                        while (!reader1.EndOfStream && !reader2.EndOfStream)
+                        {
+                            object prevItem1 = null;
+                            object prevItem2 = null;
+                            while (read1Count < seriesLength && read2Count < seriesLength && !reader1.EndOfStream && !reader2.EndOfStream)
+                            {
+                                if (prevItem1 == null)
+                                {
+                                    prevItem1 = ReadItem(reader1, isSimple);
+                                }
+                                if (prevItem2 == null)
+                                {
+                                    prevItem2 = ReadItem(reader2, isSimple);
+                                }
+                                if (CompareItem(prevItem1, prevItem2, isSimple) == -1)
+                                {
+                                    WriteItem(writer, prevItem1, isSimple);
+                                    prevItem1 = null;
+                                }
+                                else
+                                {
+                                    WriteItem(writer, prevItem2, isSimple);
+                                    prevItem2 = null;
+                                }
+                            }
+                            if (prevItem1 != null)
+                            {
+                                while (read2Count < seriesLength && !reader2.EndOfStream)
+                                {
+                                    prevItem2 = ReadItem(reader2, isSimple);
+                                    if (prevItem1 != null && CompareItem(prevItem1, prevItem2, isSimple) == -1)
+                                    {
+                                        WriteItem(writer, prevItem1, isSimple);
+                                        prevItem1 = null;
+                                    }
+                                    WriteItem(writer, prevItem2, isSimple);
+                                    prevItem2 = null;
+                                    read2Count++;
+                                }
+                                if (prevItem1 != null)
+                                {
+                                    WriteItem(writer, prevItem1, isSimple);
+                                    prevItem1 = null;
+                                }
+                            }
+                            else if (prevItem2 != null)
+                            {
+                                while (read1Count < seriesLength && !reader1.EndOfStream)
+                                {
+                                    prevItem1 = ReadItem(reader1, isSimple);
+                                    if (prevItem2 != null && CompareItem(prevItem1, prevItem2, isSimple) == 1)
+                                    {
+                                        WriteItem(writer, prevItem2, isSimple);
+                                        prevItem2 = null;
+                                    }
+                                    WriteItem(writer, prevItem1, isSimple);
+                                    prevItem1 = null;
+                                    read1Count++;
+                                }
+                                if (prevItem2 != null)
+                                {
+                                    WriteItem(writer, prevItem2, isSimple);
+                                    prevItem2 = null;
+                                }
+                            }
+                            while (!reader1.EndOfStream && read1Count < seriesLength)
+                            {
+                                prevItem1 = ReadItem(reader1, isSimple);
+                                WriteItem(writer, prevItem1, isSimple);
+                                read1Count++;
+                            }
+                            while (!reader2.EndOfStream && read2Count < seriesLength)
+                            {
+                                prevItem2 = ReadItem(reader2, isSimple);
+                                WriteItem(writer, prevItem2, isSimple);
+                                read2Count++;
+                            }
+
+                        }
+                        while (!reader1.EndOfStream)
+                        {
+                            WriteItem(writer, ReadItem(reader1, isSimple), isSimple);
+                        }
+                        while (!reader2.EndOfStream)
+                        {
+                            WriteItem(writer, ReadItem(reader2, isSimple), isSimple);
                         }
                     }
                 }
@@ -683,12 +998,34 @@ namespace Lab1
         {
             string copyFileName1 = "Lab1.TempSort1";
             string copyFileName2 = "Lab1.TempSort2";
-            File.Create(copyFileName1);
-            File.Create(copyFileName2);
+            var f = File.Create(copyFileName1);
+            f.Close();
+            f = File.Create(copyFileName2);
+            f.Close();
+            try { 
+                SimpleSort(filename, copyFileName1, copyFileName2, isSimple);
+            } finally { 
+                File.Delete(copyFileName1);
+                File.Delete(copyFileName2);
+            }
         }
         private static void ApplyNature(string filename, bool isSimple)
         {
-
+            string copyFileName1 = "Lab1.TempSort1";
+            string copyFileName2 = "Lab1.TempSort2";
+            var f = File.Create(copyFileName1);
+            f.Close();
+            f = File.Create(copyFileName2);
+            f.Close();
+            try
+            {
+                NatureSort(filename, copyFileName1, copyFileName2, isSimple);
+            }
+            finally
+            {
+                File.Delete(copyFileName1);
+                File.Delete(copyFileName2);
+            }
         }
         private static void ApplyMultiple(string filename, bool isSimple)
         {
@@ -713,7 +1050,7 @@ namespace Lab1
     public class Sortes
     {
         public delegate void SortF(ref List<WeatherData> data);
-        public delegate void OutSortF(string filename);
+        public delegate void OutSortF(string filename, bool isSimple);
         private static string outFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output.json");
         private static void AddToFile(string s)
         {
@@ -734,7 +1071,7 @@ namespace Lab1
             //AddToFile(String.Format("\t\t\"Result\": [{0}]", String.Join(",", ar)))
             //AddToFile("\t},");
             //AddToFile(String.Format("\n\n\"{0}\":", name));
-            AddToFile(String.Format("{0};{1};{2};{3};{4}", ar.Count, Sort<WeatherData>.Time, Sort<WeatherData>.Swaps, 
+            AddToFile(String.Format("{0};{1};{2};{3};{4}", ar.Count, Sort<WeatherData>.Time, Sort<WeatherData>.Swaps,
                 Sort<WeatherData>.Iterations, Sort<WeatherData>.Assigments));
             for (var i = 1; i < ar.Count; i++)
             {
@@ -894,7 +1231,7 @@ namespace Lab1
                             break;
                     }
                 }
-                
+
                 Sort<WeatherData>.Quick(ref ar);
 
                 AddToFile(";;;;");

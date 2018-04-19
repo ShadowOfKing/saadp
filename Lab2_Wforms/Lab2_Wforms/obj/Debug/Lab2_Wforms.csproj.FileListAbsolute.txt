@@ -4,3 +4,14 @@ D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_WForms.Form1.resources
 D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_Wforms.Properties.Resources.resources
 D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_Wforms.csproj.GenerateResource.Cache
 D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_Wforms.csproj.CoreCompileInputs.cache
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Lab2_Wforms.exe.config
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Lab2_Wforms.exe
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Lab2_Wforms.pdb
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Lab1.exe
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Newtonsoft.Json.dll
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Lab1.pdb
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Lab1.exe.config
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\bin\Debug\Newtonsoft.Json.xml
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_Wforms.exe
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_Wforms.pdb
+D:\Work\Univ\saadp\Lab2_Wforms\Lab2_Wforms\obj\Debug\Lab2_Wforms.OutputForm.resources
